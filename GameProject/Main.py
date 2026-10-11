@@ -1,64 +1,41 @@
 from Class import *
 from Function import *
 
-pelaaja = luo_pelaaja()
+pelaaja = None
 
-# with open("Intro.txt", "r", encoding="utf-8") as tiedosto:
-#     print(tiedosto.read())
+try:
+    while True: # yksi kierros = yksi peli
+        pelaaja, reitti, vaihe = aloita_tai_jatka() # uusi peli tai tallennettu peli
 
-komento = aloita_peli(pelaaja)
+        if reitti is None: # uusi peli: intro, alkuvalikko ja reitin valinta
+            reitti = valitse_reitti(pelaaja)
+            vaihe = 0 # uusi matka alkaa reitin ensimmäisestä tapahtumasta
+        else: # tallennettu peli: "Welcome back" näkyy hetken ja jatketaan
+            odota_enter()
+            tyhjennä_ruutu()
 
-while komento != "quit" and komento != "Quit":
-    if not pelaaja.matka_alkanut and komento == "1": # walking
-        reitti_kävely1(pelaaja)
-        tapahtuma_kävely_roska(pelaaja, pieni_valikko)
-        tapahtuma_kävely_kyssäri(pelaaja, pieni_valikko)
-        tapahtuma_kävely_ystävä(pelaaja, pieni_valikko)
-        tapahtuma_kävely_reitti_koulu(pelaaja)
         pelaaja.matka_alkanut = True
+        peli_ohi = False
 
+        while not peli_ohi: # käydään reitin tapahtumat läpi yksi kerrallaan
+            tallenna_peli(pelaaja, reitti, vaihe)           # tallennus jokaisen tapahtuman alussa
+            peli_ohi = REITIT[reitti][vaihe](pelaaja)       # suoritetaan tapahtuma (loppu palauttaa True)
+            vaihe += 1
 
-    elif not pelaaja.matka_alkanut and komento == "2": # bicycle
-        reitti_pyörä1(pelaaja)
-        tapahtuma_pyörä_mäki(pelaaja, pieni_valikko)
-        tapahtuma_pyörä_koira(pelaaja, pieni_valikko)
-        tapahtuma_pyörä_kivi(pelaaja, pieni_valikko)
-        tapahtuma_pyörä_reitti_koulu(pelaaja)
-        pelaaja.matka_alkanut = True
+            if reitti == "1" and pelaaja.sijainti.nimi == BUSSIPYSÄKKI: # kävelijä vaihtoi bussiin
+                reitti = "3"
+                vaihe = 1 # jatketaan bussireitin toisesta tapahtumasta (bussipysäkille on jo kävelty)
 
+        pelaaja.matka_alkanut = False # matka on ohi, tallennusta ei enää ole
 
-    elif not pelaaja.matka_alkanut and komento == "3": # bus
-        reitti_bussi1(pelaaja)
-        tapahtuma_bussi_myöhässä(pelaaja, pieni_valikko)
-        tapahtuma_bussi_lippu(pelaaja, pieni_valikko)
-        tapahtuma_bussi_penkki(pelaaja, pieni_valikko)
-        tapahtuma_bussi_pysäkki_ohi(pelaaja, pieni_valikko)
-        tapahtuma_bussi_reitti_koulu(pelaaja)
-        pelaaja.matka_alkanut = True
-    
-    
-    elif not pelaaja.matka_alkanut and komento == "4": # car
-        reitti_auto1(pelaaja)
-        tapahtuma_auto_unohdettu(pelaaja, pieni_valikko)
-        tapahtuma_auto_liikenne(pelaaja, pieni_valikko)
-        tapahtuma_auto_pysäköinti(pelaaja, pieni_valikko)
-        tapahtuma_auto_reitti_koulu(pelaaja)
-        pelaaja.matka_alkanut = True
+        if kysy_valinta("yes", "no", kehote="\nPlay again? (yes/no): ") == "no":
+            break
 
-    elif komento == "backpack":
-        pelaaja.näytä_reppu()
+        tyhjennä_ruutu()
 
-    elif komento == "location":
-        pelaaja.näytä_sijainti()
+    print(f"\nThanks for playing, {pelaaja.käyttäjätunnus}! Have a great day at school!")
 
-    else:
-        print("\nUnknown command. Please try again.")
-
-    if pelaaja.matka_alkanut:
-        tulosta_valikko(pieni_valikko, "Small Menu")
-    else:
-        tulosta_valikko(pää_valikko, "How would you like to travel to school today?")
-
-    komento = input("Enter command: ").lower()
-
-print(f"\nThank you for playing, {pelaaja.käyttäjätunnus}! See you never.")
+except (KeyboardInterrupt, EOFError): # Ctrl+C tai syöte loppui: peli sulkeutuu siististi
+    print("\n\nGame closed.")
+    if pelaaja is not None and pelaaja.matka_alkanut:
+        print("Your progress was saved at the start of the last event. Use the same username to continue.")

@@ -69,13 +69,16 @@ class Pelaaja:
         """
         print(kartta)
 
-def luo_pelaaja():
+def kysy_käyttäjätunnus():
     käyttäjätunnus = input("Enter username: ").strip()
 
     while käyttäjätunnus == "":
         print("Username cannot be empty.")
         käyttäjätunnus = input("Enter username: ").strip()
 
+    return käyttäjätunnus
+
+def luo_pelaaja(käyttäjätunnus):
     while True:
         try:
             käyttäjä_ikä = int(input("Enter age: ").strip())
@@ -101,3 +104,5 @@ class Esine:
 class Paikka:
     def __init__(self, nimi):
         self.nimi = nimi
+
+

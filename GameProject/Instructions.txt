@@ -1,15 +1,23 @@
 HOW TO PLAY
 -----------
 - Enter your username and age (12-99) to start.
-- Choose how to travel to school: walking, bicycle, bus or car.
-- During the trip, answer the questions by typing one of the options
-  shown in the brackets, for example yes/no or hill/road.
+- Choose how to travel to school by typing the number of your choice:
+    1 - walking
+    2 - bicycle
+    3 - bus
+    4 - car (only if you are 18 or older)
+- During the trip, answer the questions by typing the whole word shown
+  in the brackets, for example yes/no or hill/road.
 - After each event a small menu appears:
-    backpack       - show what you are carrying
-    location       - show the route map and where you are
-    continue/enter - go on with the trip (typing "continue" or just
-                     pressing Enter both work)
-    quit           - leave the game
+    1     - show what you are carrying (and how much it weighs)
+    2     - show the route map and where you are
+    3     - show your status (name, age, location, backpack, feelings)
+    4     - continue (pressing just Enter works too)
+    quit  - leave the game (you will be asked to confirm)
+
+Your choices change how your morning ends. What is in your backpack
+matters too: things can break or get lost on the way. At school you get
+a short summary of what happened. After that you can play again.
 
 
 SAVING
@@ -17,4 +25,7 @@ SAVING
 Your progress is saved automatically at the start of every event.
 To continue later, start the game, enter the same username and answer
 "yes" to "Continue the saved game?". You continue from the start of
-the event you were on.
+the event you were on. The save is deleted when you finish the game.
+
+You can also close the game any time with Ctrl+C. Your progress stays
+saved at the start of the event you were on.
