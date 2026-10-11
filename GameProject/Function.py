@@ -498,6 +498,7 @@ def tapahtuma_pyörä_kivi(pelaaja: Pelaaja):
         if kivi_kyssäri == "yes":
             print(f"\n{pelaaja.käyttäjätunnus} swerves just in time and avoids the rock. Phew!")
             jatka_valikkoon(pelaaja)
+            return
 
         elif kivi_kyssäri is None or kivi_kyssäri == "no":
             if kivi_kyssäri is None:
@@ -513,6 +514,7 @@ def tapahtuma_pyörä_kivi(pelaaja: Pelaaja):
             pelaaja.sijainti = Paikka(KÄVELYPOLKU)
             jatka_valikkoon(pelaaja)
             tapahtuma_kävely_oikotie(pelaaja)
+            return
 
         else:
             print("Unknown command. Please enter yes or no")
