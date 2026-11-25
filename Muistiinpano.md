@@ -77,3 +77,5 @@ while password != "salainen123":
 print("Ohjelma jatkuu tästä eteenpäin.")
 
 tossa kysytään salasanaa ja se kysyy sitä kunnes laitat oikean salasanan mutta jos olet unohtanut salasanaa niin sanot vaa peru nii sit se silmukka ei enää kysy sulta joten next silmukka tai koodi jatkuu siitä joten <break> antaa way out siitä silmukasta
+
+MOI MAAILMA
